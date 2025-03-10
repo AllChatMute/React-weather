@@ -1,15 +1,39 @@
-const Search = () => {
+import { SetStateAction, useContext, Dispatch, useState } from "react";
+import { SearchContext } from "../Contexts";
+// import { debounce } from "lodash";
+
+interface SearchContextType {
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+}
+
+const Search: React.FC = () => {
+  const { setValue } = useContext(SearchContext) as SearchContextType;
+  const [inputValue, setInputValue] = useState("");
+
+  const handleChangeInput = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmitValue = () => {
+    setValue(inputValue);
+  };
+
   return (
     <>
       <div className="search-section">
         <div className="input-wrapper">
           <input
+            value={inputValue}
             type="search"
             placeholder="Enter a city name"
             className="search-input"
+            onChange={handleChangeInput}
           ></input>
         </div>
-        <button className="location-button">
+        <button className="location-button" onClick={handleSubmitValue}>
           <span className="material-symbols-rounded">
             <svg
               xmlns="http://www.w3.org/2000/svg"

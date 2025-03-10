@@ -1,15 +1,20 @@
-import NoResults from "./components/NoResults";
+import { useState } from "react";
+
 import Search from "./components/Search";
 import Weather from "./components/Weather";
+import { SearchContext } from "./Contexts";
 
 const App: React.FC = () => {
+  const [value, setValue] = useState("");
+  console.log(value);
   return (
     <>
-      <div className="container">
-        <Search />
-        <NoResults />
-        <Weather city="Тобольск" />
-      </div>
+      <SearchContext.Provider value={{ value, setValue }}>
+        <div className="container">
+          <Search />
+          <Weather city={value} />
+        </div>
+      </SearchContext.Provider>
     </>
   );
 };
